@@ -12,6 +12,18 @@ module.exports.add = (reqBody) => {
         .catch(() => false)
 }
 
+module.exports.getAll = () => {
+    // return Course.find().then(courses => courses).then()
+    return Course.find({ isActive: true }).then(courses => {
+        return courses
+    })
+}
+
+module.exports.archive = (courseId) => {
+    return Course.findByIdAndUpdate(courseId, { isActive: false })
+        .then(() => true)
+}
+
 // LEVEL 1
 
 // invoke
