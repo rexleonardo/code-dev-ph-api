@@ -1,4 +1,5 @@
 const User = require('./../models/User');
+const bcrypt = require('bcrypt');
 
 module.exports.register = (params) => {
 
@@ -8,7 +9,7 @@ module.exports.register = (params) => {
         lastName: params.lastName,
         email: params.email,
         mobileNo: params.mobileNo,
-        password: params.password,
+        password: bcrypt.hashSync(params.password, 10)
     })
 
     return user.save()
