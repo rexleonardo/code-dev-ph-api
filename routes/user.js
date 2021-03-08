@@ -41,8 +41,15 @@ router.get('/details', auth.verify, (req, res) => {
 
 //  2:10 pm
 //  Course Booking Enroll Student Act
-router.put('/enroll', auth.verify, (req, res) => {
-    UserController.enroll(req.decodedToken.id, req.body).then(result => res.send(result));
+router.post('/enroll', auth.verify, (req, res) => {
+    UserController.enroll({
+        userId: req.decodedToken.id,
+        courseId: req.body.courseId
+    }).then(result => res.send(result))
 })
+
+// router.put('/enroll', auth.verify, (req, res) => {
+//     UserController.enroll(req.decodedToken.id, req.body).then(result => res.send(result));
+// })
 
 module.exports = router;
