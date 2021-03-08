@@ -59,19 +59,19 @@ module.exports.details = (id) => {
         .then(user => user)
 }
 
-module.exports.enroll = (params) => {
-    return User.findByIdAndUpdate(params._id, {
+module.exports.enroll = (id, reqBody) => {
+    return User.findByIdAndUpdate(id, {
             $push: {
                 enrollments: [{
-                    courseId: params.courseId,
+                    courseId: reqBody.courseId,
                 }]
             }
         })
         .then(course => {
-            return Course.findByIdAndUpdate(params._id, {
+            return Course.findByIdAndUpdate(reqBody._id, {
                 $push: {
                     enrollees: [{
-                        userId: params.userId,
+                        userId: reqBody.userId,
                     }]
                 }
             })
