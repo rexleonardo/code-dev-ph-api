@@ -1,4 +1,5 @@
 const User = require('./../models/User');
+const Course = require('./../models/Course')
 const bcrypt = require('bcrypt');
 const auth = require('./../auth');
 
@@ -59,25 +60,21 @@ module.exports.details = (id) => {
 }
 
 module.exports.enroll = (params) => {
-    // return User.findByIdAndUpdate(params._id, {
-    //         enrollments: [{
-    //             courseId: params.courseId,
-    //             enrolledOn: params.enrolledOn,
-    //             status: params.status
-    //         }]
-    //     })
-    //     .then(() => true)
-    //     .catch(() => false)
-
     return User.findByIdAndUpdate(params._id, {
             $push: {
                 enrollments: [{
                     courseId: params.courseId,
-                    enrolledOn: params.enrolledOn,
-                    status: params.status
                 }]
             }
         })
-        .then(() => true)
+        .then(course => {
+            return Course.findByIdAndUpdate(params._id, {
+                $push: {
+                    enrollees: [{
+                        userId: params.userId,
+                    }]
+                }
+            })
+        })
         .catch(() => false)
 }
