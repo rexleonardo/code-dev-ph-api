@@ -29,7 +29,20 @@ router.get('/details', auth.verify, (req, res) => {
     UserController.details(req.decodedToken.id).then(result => res.send(result))
 })
 
-// enroll
-//		enroll student
+//enroll
+//	enroll student
+//	logged in user will be enrolled to the course id that he submitted 
+//	/enroll
+//		req.body will receive the courseId
+//		under the user's enrollments field
+//			add subdocument to enrollments field, containing the courseId
+//		in selected course's document
+//			add a subdocument under enrollees containing userId
+
+//  2:10 pm
+//  Course Booking Enroll Student Act
+router.put('/enroll', auth.verify, (req, res) => {
+    UserController.enroll(req.body).then(result => res.send(result));
+})
 
 module.exports = router;

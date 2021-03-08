@@ -54,5 +54,30 @@ module.exports.login = (params) => {
 }
 
 module.exports.details = (id) => {
-    return User.findById(id, { password: 0 }).then(user => user)
+    return User.findById(id, { password: 0 })
+        .then(user => user)
+}
+
+module.exports.enroll = (params) => {
+    // return User.findByIdAndUpdate(params._id, {
+    //         enrollments: [{
+    //             courseId: params.courseId,
+    //             enrolledOn: params.enrolledOn,
+    //             status: params.status
+    //         }]
+    //     })
+    //     .then(() => true)
+    //     .catch(() => false)
+
+    return User.findByIdAndUpdate(params._id, {
+            $push: {
+                enrollments: [{
+                    courseId: params.courseId,
+                    enrolledOn: params.enrolledOn,
+                    status: params.status
+                }]
+            }
+        })
+        .then(() => true)
+        .catch(() => false)
 }

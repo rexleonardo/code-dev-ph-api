@@ -11,14 +11,15 @@ module.exports.createAccessToken = (user) => {
 }
 
 module.exports.verify = (req, res, next) => {
-    let token = req.headers.authorizaiton;
+    let token = req.headers.authorization;
+    // "Bearer ey5gfXt2"
     if (typeof token !== 'undefined') {
         token = token.slice(7, token.length);
         jwt.verify(token, process.env.SECRET, (err, decoded) => {
             if (!err) req.decodedToken = decoded;
             // err ? is equivalent to if(err)
             // : is equivalent to else
-            return err ? res.send({ auth: failed }) : res.send(decoded)
+            return err ? res.send({ auth: failed }) : next();
         })
     } else {
         return res.send({ auth: 'failed' })
