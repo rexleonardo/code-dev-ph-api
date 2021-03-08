@@ -52,3 +52,12 @@ module.exports.login = (params) => {
             }
         })
 }
+
+module.exports.details = (params) => {
+    // User.findById(params, { _id: 0 })
+    //     .then(user => res.send(user))
+    //     .catch(() => false)
+
+    let token = req.headers.authorization.replace("Bearer ", "");
+    let decoded = jwt.verify(token, process.env.SECRET);
+}
