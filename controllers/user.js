@@ -1,5 +1,6 @@
 const User = require('./../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports.register = (params) => {
 
@@ -24,4 +25,32 @@ module.exports.register = (params) => {
     //  mobileNo,
     //  password
     // })
+}
+
+module.exports.login = (params) => {
+    // params = {
+    //     "email": "email",
+    //     "password": "password"
+    // }
+    let { email, password } = params;
+    // return
+    // check email in the database
+    return User.findOne({ email })
+        .then(user => {
+            if (!user) return false;
+
+            // compare password to hashed password
+            // hashed pw = user.password
+            let isPasswordMatched = bcrypt.compareSync(password, user.password);
+            if (!isPasswordMatched) return false;
+            // create a token
+            let accessToken = jwt.sign({
+                id: user._id,
+                email: user.email,
+                isAdmin: user.isAdmin
+            }, 'courseBooking');
+            return {
+                accessToken: accessToken
+            }
+        })
 }
