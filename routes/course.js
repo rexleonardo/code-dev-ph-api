@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     CourseController.getAll().then(courses => res.send(courses))
 });
 
-router.get('-admin', (req, res) => {
+router.get('/admin', (req, res) => {
     CourseController.getAllAdmin().then(courses => res.send(courses))
 });
 
