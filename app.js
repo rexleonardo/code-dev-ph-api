@@ -9,6 +9,11 @@ mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true, useUnifiedTopolog
 mongoose.connection.on('error', () => { console.log("Error connecting to database") })
 mongoose.connection.once('open', () => { console.log("Connected to database") })
 
+app.use((req, res, next) => {
+    console.log(new Date())
+    next();
+})
+
 // middlewares
 app.use(cors());
 app.use(express.json());

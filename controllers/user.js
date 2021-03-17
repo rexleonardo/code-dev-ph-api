@@ -1,5 +1,5 @@
 const User = require('./../models/User');
-const Course = require('./../models/Course')
+const Course = require('./../models/Course');
 const bcrypt = require('bcrypt');
 const auth = require('./../auth');
 
@@ -61,71 +61,57 @@ module.exports.details = (id) => {
 module.exports.enroll = (params) => {
     // method1
     // return User.findById(params.userId)
-    //     .then(user => {
-    //         user.enrollments.push({ courseId: params.courseId })
-    //         return user.save().then(() => {
-    //             return Course.findById(params.courseId)
-    //                 .then(course => {
-    //                     course.enrollees.push({ userId: params.userId })
-    //                     return course.save().then(course => {
-    //                         return true
-    //                     }).catch(() => false)
-    //                 }).catch(() => false)
-    //         }).catch(() => false)
-    //     }).catch(() => false)
+    // .then( user => {
+    //  user.enrollments.push({courseId: params.courseId})
+    //  return user.save().then(() =>{
+    //      return Course.findById(params.courseId)
+    //      .then( course => {
+    //          course.enrollees.push({userId : params.userId})
+    //          return course.save().then( () =>{
+    //              return true
+    //          }).catch( () => false)
+    //      }).catch(() => false)
+    //  }).catch(()=> false)
+    // }).catch(()=> false)
 
     // method2
     // return User.findById(params.userId)
-    //     .then(user => {
-    //         user.enrollments.push({ courseId: params.courseId })
-    //         return user.save()
-    //     })
-    //     .then(() => {
-    //         return Course.findById(params.courseId)
-    //     })
-    //     .then(course => {
-    //         course.enrollees.push({ userId: params.userId })
-    //         return course.save()
-    //     })
-    //     .then(() => true)
-    //     .catch(() => false)
+    // .then( user => {
+    //  user.enrollments.push({courseId: params.courseId})
+    //  return user.save()
+    // })
+    // .then(() => {
+    //  return Course.findById(params.courseId)
+    // })
+    // .then( course => {
+    //  course.enrollees.push({userId: params.userId})
+    //  return course.save()
+    // })
+    // .then(() => true)
+    // .catch(() => false)
 
     // method3
-    return User.findByIdAndUpdate(params.userId, {
-            $push: { enrollments: { courseId: params.courseId } }
-        }).then(() => {
+    // return User.findByIdAndUpdate(params.userId,{
+    //  $push : { enrollments : { courseId : params.courseId}}
+    // }).then( () =>{
+    //  return Course.findByIdAndUpdate(params.courseId, {
+    //      $push : { enrollees: { userId: params.userId}}
+    //  })
+    // }).then(()=> true)
+    // .catch(() => false)
+
+    // method4
+    return Course.findById(params.courseId)
+        .then(course => {
+            if (!course) return false;
+            return User.findByIdAndUpdate(params.userId, {
+                $push: { enrollments: { courseId: params.courseId } }
+            })
+        })
+        .then(() => {
             return Course.findByIdAndUpdate(params.courseId, {
                 $push: { enrollees: { userId: params.userId } }
             })
         }).then(() => true)
         .catch(() => false)
-    
-    // return Course.findById(params.courseId)
-    //     .then(course => {
-    //         if (!course) return false;
-    //         return User.findByIdAndUpdate(params.userId, {
-    //             $push: { enrollees: { userId: params.userId } }
-    //         })
-    //     }).then(() => true)
-    //     .catch(() => false)
 }
-
-// module.exports.enroll = (id, reqBody) => {
-//     return User.findByIdAndUpdate(id, {
-//             $push: {
-//                 enrollments: [{
-//                     courseId: reqBody.courseId,
-//                 }]
-//             }
-//         })
-//         .then(course => {
-//             return Course.findByIdAndUpdate(id, {
-//                 $push: {
-//                     enrollees: [{
-//                         userId: reqBody.userId,
-//                     }]
-//                 }
-//             })
-//         })
-//         .catch(() => false)
-// }

@@ -18,7 +18,7 @@ const courseSchema = new mongoose.Schema({
     },
     createdOn: {
         type: Date,
-        default: new Date
+        default: new Date()
     },
     enrollees: [{
         userId: {

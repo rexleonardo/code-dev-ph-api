@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const UserController = require('./../controllers/user');
-const auth = require('./../auth')
+const auth = require('./../auth');
 
 router.post('/', (req, res) => {
     if (req.body.password !== req.body.confirmPassword) return res.send(false);

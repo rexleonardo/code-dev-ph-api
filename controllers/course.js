@@ -10,6 +10,9 @@ module.exports.add = (reqBody) => {
     return course.save()
         .then(() => true)
         .catch(() => false)
+    // return course.save().then((course, err) => {
+    //     return err ? false : true
+    // })
 }
 
 module.exports.getAll = () => {
@@ -55,15 +58,15 @@ module.exports.update = reqBody => {
 
 // declaration
 // function myFunc(args) {
-// 	console.log(args.name)
+//  console.log(args.name)
 // }
 
 // LEVEL 3
 
 // let person = {
-// 	age: 13,
-// 	height: 164,
-// 	name: "Rex"
+//  age: 13,
+//  height: 164,
+//  name: "Rex"
 // }
 
 // invoke
@@ -71,5 +74,5 @@ module.exports.update = reqBody => {
 
 // declaration
 // function myFunc(args) {
-// 	console.log(args.age)
+//  console.log(args.age)
 // }
