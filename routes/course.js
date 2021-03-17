@@ -7,6 +7,10 @@ router.get('/', (req, res) => {
     CourseController.getAll().then(courses => res.send(courses))
 });
 
+router.get('-admin', (req, res) => {
+    CourseController.getAllAdmin().then(courses => res.send(courses))
+});
+
 // get specific course
 router.get('/:courseId', (req, res) => {
     // res.send("add course routes");

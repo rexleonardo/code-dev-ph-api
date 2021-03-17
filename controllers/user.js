@@ -103,6 +103,7 @@ module.exports.enroll = (params) => {
     // method4
     return Course.findById(params.courseId)
         .then(course => {
+            console.log(course)
             if (!course) return false;
             return User.findByIdAndUpdate(params.userId, {
                 $push: { enrollments: { courseId: params.courseId } }
