@@ -33,6 +33,12 @@ module.exports.archive = courseId => {
         .then(() => true)
 }
 
+module.exports.reactivate = courseId => {
+    return Course.findByIdAndUpdate(courseId, { isActive: true })
+        .then(() => true)
+        .catch(() => false)
+}
+
 module.exports.get = courseId => {
     return Course.findById(courseId).then((course) => course)
 }

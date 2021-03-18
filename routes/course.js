@@ -28,6 +28,10 @@ router.delete('/:courseId', auth.verify, (req, res) => {
     CourseController.archive(req.params.courseId).then(course => res.send(course))
 });
 
+router.post('/:courseId', auth.verify, (req, res) => {
+    CourseController.reactivate(req.params.courseId).then(course => res.send(course))
+});
+
 // update course
 router.put('/', auth.verify, (req, res) => {
     CourseController.update(req.body).then(result => res.send(result))
